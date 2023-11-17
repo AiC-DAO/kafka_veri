@@ -8,7 +8,7 @@ import (
 	"github.com/Shopify/sarama"
 )
 
-const BROKER_ADDR = "172.0.0.1:9092"
+const BROKER_ADDR = "localhost:9092"
 
 func main() {
 	config := sarama.NewConfig()
@@ -27,28 +27,28 @@ func main() {
 		}
 	}()
 
-	log.Printf("初始化消费者====\n")
-	consumer, err := sarama.NewConsumer([]string{BROKER_ADDR}, config)
-	if err != nil {
-		log.Fatalln(err)
-		log.Fatalln("222222")
-	}
-	defer func() {
-		if err := consumer.Close(); err != nil {
-			log.Fatalln(err)
-		}
-	}()
+	// log.Printf("初始化消费者====\n")
+	// consumer, err := sarama.NewConsumer([]string{BROKER_ADDR}, config)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// 	log.Fatalln("222222")
+	// }
+	// defer func() {
+	// 	if err := consumer.Close(); err != nil {
+	// 		log.Fatalln(err)
+	// 	}
+	// }()
 
-	partitionConsumer, err := consumer.ConsumePartition("to-ender", 0, sarama.OffsetNewest)
-	if err != nil {
-		log.Fatalln(err)
-		log.Fatalln("333333")
-	}
-	defer func() {
-		if err := partitionConsumer.Close(); err != nil {
-			log.Fatalln(err)
-		}
-	}()
+	// partitionConsumer, err := consumer.ConsumePartition("to-ender", 0, sarama.OffsetNewest)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// 	log.Fatalln("333333")
+	// }
+	// defer func() {
+	// 	if err := partitionConsumer.Close(); err != nil {
+	// 		log.Fatalln(err)
+	// 	}
+	// }()
 
 	log.Printf("初始化完成====\n")
 
@@ -75,9 +75,9 @@ func main() {
 	}()
 
 	// 消费者获取消息并打印
-	for msg := range partitionConsumer.Messages() {
-		log.Printf("消费者接收消息====\n")
-		fmt.Printf("Message topic:%q partition:%d offset:%d\n", msg.Topic, msg.Partition, msg.Offset)
-		fmt.Printf("Message value:%s\n", string(msg.Value))
-	}
+	// for msg := range partitionConsumer.Messages() {
+	// 	log.Printf("消费者接收消息====\n")
+	// 	fmt.Printf("Message topic:%q partition:%d offset:%d\n", msg.Topic, msg.Partition, msg.Offset)
+	// 	fmt.Printf("Message value:%s\n", string(msg.Value))
+	// }
 }
