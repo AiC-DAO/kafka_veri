@@ -8,13 +8,15 @@ import (
 	"github.com/Shopify/sarama"
 )
 
+const BROKER_ADDR = "172.0.0.1:9092"
+
 func main() {
 	config := sarama.NewConfig()
 	config.Producer.Return.Successes = true
 	config.Consumer.Return.Errors = true
 
 	log.Printf("初始化生产者====\n")
-	producer, err := sarama.NewSyncProducer([]string{"172.0.0.1:29092"}, config)
+	producer, err := sarama.NewSyncProducer([]string{BROKER_ADDR}, config)
 	if err != nil {
 		log.Fatalln(err)
 		log.Fatalln("11111111")
@@ -26,7 +28,7 @@ func main() {
 	}()
 
 	log.Printf("初始化消费者====\n")
-	consumer, err := sarama.NewConsumer([]string{"172.0.0.1:29092"}, config)
+	consumer, err := sarama.NewConsumer([]string{BROKER_ADDR}, config)
 	if err != nil {
 		log.Fatalln(err)
 		log.Fatalln("222222")
