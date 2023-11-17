@@ -28,11 +28,6 @@ services:
       timeout: 20s
       retries: 50
 
-iROBOT:
-ok
-
-
-
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
