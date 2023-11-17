@@ -1,8 +1,5 @@
 version: '3'
 services:
-  水涨船高:
-version: '3'
-services:
   kafka:
     image: blacktop/kafka:2.6
     ports:
