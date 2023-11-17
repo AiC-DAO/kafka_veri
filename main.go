@@ -48,6 +48,8 @@ func main() {
 
 	go func() {
 		for {
+			log.Printf("开始发送消息====\n")
+
 			message := &sarama.ProducerMessage{
 				Topic: "to-ender",
 				Value: sarama.StringEncoder("Hello, World!"),
@@ -60,12 +62,15 @@ func main() {
 				fmt.Printf("Message sent to partition %d at offset %d\n", partition, offset)
 			}
 
+			log.Printf("消息发送完毕====\n")
+
 			time.Sleep(1 * time.Second)
 		}
 	}()
 
 	// 消费者获取消息并打印
 	for msg := range partitionConsumer.Messages() {
+		log.Printf("消费者接收消息====\n")
 		fmt.Printf("Message topic:%q partition:%d offset:%d\n", msg.Topic, msg.Partition, msg.Offset)
 		fmt.Printf("Message value:%s\n", string(msg.Value))
 	}
