@@ -13,6 +13,7 @@ func main() {
 	config.Producer.Return.Successes = true
 	config.Consumer.Return.Errors = true
 
+	log.Printf("初始化生产者====\n")
 	producer, err := sarama.NewSyncProducer([]string{"172.0.0.1:9092"}, config)
 	if err != nil {
 		log.Fatalln(err)
@@ -24,6 +25,7 @@ func main() {
 		}
 	}()
 
+	log.Printf("初始化消费者====\n")
 	consumer, err := sarama.NewConsumer([]string{"172.0.0.1:9092"}, config)
 	if err != nil {
 		log.Fatalln(err)
@@ -45,6 +47,8 @@ func main() {
 			log.Fatalln(err)
 		}
 	}()
+
+	log.Printf("初始化完成====\n")
 
 	go func() {
 		for {
