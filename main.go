@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/Shopify/sarama"
 )
@@ -15,17 +14,17 @@ func main() {
 	config.Producer.Return.Successes = true
 	config.Consumer.Return.Errors = true
 
-	log.Printf("初始化生产者====\n")
-	producer, err := sarama.NewSyncProducer([]string{BROKER_ADDR}, config)
-	if err != nil {
-		log.Fatalln(err)
-		log.Fatalln("11111111")
-	}
-	defer func() {
-		if err := producer.Close(); err != nil {
-			log.Fatalln(err)
-		}
-	}()
+	// log.Printf("初始化生产者====\n")
+	// producer, err := sarama.NewSyncProducer([]string{BROKER_ADDR}, config)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// 	log.Fatalln("11111111")
+	// }
+	// defer func() {
+	// 	if err := producer.Close(); err != nil {
+	// 		log.Fatalln(err)
+	// 	}
+	// }()
 
 	log.Printf("初始化消费者====\n")
 	consumer, err := sarama.NewConsumer([]string{BROKER_ADDR}, config)
@@ -52,27 +51,28 @@ func main() {
 
 	log.Printf("初始化完成====\n")
 
-	go func() {
-		for {
-			log.Printf("开始发送消息====\n")
+	// 生产者发送数据
+	// go func() {
+	// 	for {
+	// 		log.Printf("开始发送消息====\n")
 
-			message := &sarama.ProducerMessage{
-				Topic: "to-ender",
-				Value: sarama.StringEncoder("Hello, World!"),
-			}
+	// 		message := &sarama.ProducerMessage{
+	// 			Topic: "to-ender",
+	// 			Value: sarama.StringEncoder("Hello, World!"),
+	// 		}
 
-			partition, offset, err := producer.SendMessage(message)
-			if err != nil {
-				log.Printf("Failed to send message: %v\n", err)
-			} else {
-				fmt.Printf("Message sent to partition %d at offset %d\n", partition, offset)
-			}
+	// 		partition, offset, err := producer.SendMessage(message)
+	// 		if err != nil {
+	// 			log.Printf("Failed to send message: %v\n", err)
+	// 		} else {
+	// 			fmt.Printf("Message sent to partition %d at offset %d\n", partition, offset)
+	// 		}
 
-			log.Printf("消息发送完毕====\n")
+	// 		log.Printf("消息发送完毕====\n")
 
-			time.Sleep(1 * time.Second)
-		}
-	}()
+	// 		time.Sleep(1 * time.Second)
+	// 	}
+	// }()
 
 	// 消费者获取消息并打印
 	for msg := range partitionConsumer.Messages() {
