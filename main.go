@@ -13,7 +13,7 @@ func main() {
 	config.Producer.Return.Successes = true
 	config.Consumer.Return.Errors = true
 
-	producer, err := sarama.NewSyncProducer([]string{"localhost:9092"}, config)
+	producer, err := sarama.NewSyncProducer([]string{"172.0.0.1:9092"}, config)
 	if err != nil {
 		log.Fatalln(err)
 		log.Fatalln("11111111")
@@ -24,7 +24,7 @@ func main() {
 		}
 	}()
 
-	consumer, err := sarama.NewConsumer([]string{"localhost:9092"}, config)
+	consumer, err := sarama.NewConsumer([]string{"172.0.0.1:9092"}, config)
 	if err != nil {
 		log.Fatalln(err)
 		log.Fatalln("222222")
