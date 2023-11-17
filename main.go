@@ -52,27 +52,47 @@ func main() {
 
 	log.Printf("初始化完成====\n")
 
-	go func() {
-		for {
-			log.Printf("开始发送消息====\n")
+	// go func() {
+	// 	for {
+	// 		log.Printf("开始发送消息====\n")
 
-			message := &sarama.ProducerMessage{
-				Topic: "to-ender",
-				Value: sarama.StringEncoder("Hello, World!"),
-			}
+	// 		message := &sarama.ProducerMessage{
+	// 			Topic: "to-ender",
+	// 			Value: sarama.StringEncoder("Hello, World!"),
+	// 		}
 
-			partition, offset, err := producer.SendMessage(message)
-			if err != nil {
-				log.Printf("Failed to send message: %v\n", err)
-			} else {
-				fmt.Printf("Message sent to partition %d at offset %d\n", partition, offset)
-			}
+	// 		partition, offset, err := producer.SendMessage(message)
+	// 		if err != nil {
+	// 			log.Printf("Failed to send message: %v\n", err)
+	// 		} else {
+	// 			fmt.Printf("Message sent to partition %d at offset %d\n", partition, offset)
+	// 		}
 
-			log.Printf("消息发送完毕====\n")
+	// 		log.Printf("消息发送完毕====\n")
 
-			time.Sleep(1 * time.Second)
+	// 		time.Sleep(1 * time.Second)
+	// 	}
+	// }()
+
+	for {
+		log.Printf("开始发送消息====\n")
+
+		message := &sarama.ProducerMessage{
+			Topic: "to-ender",
+			Value: sarama.StringEncoder("Hello, World!"),
 		}
-	}()
+
+		partition, offset, err := producer.SendMessage(message)
+		if err != nil {
+			log.Printf("Failed to send message: %v\n", err)
+		} else {
+			fmt.Printf("Message sent to partition %d at offset %d\n", partition, offset)
+		}
+
+		log.Printf("消息发送完毕====\n")
+
+		time.Sleep(1 * time.Second)
+	}
 
 	// 消费者获取消息并打印
 	// for msg := range partitionConsumer.Messages() {
